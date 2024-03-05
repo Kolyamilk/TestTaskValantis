@@ -1,26 +1,125 @@
-#root {
-  max-width: 1580px;
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+
+
+  color-scheme: light dark;
+
+  background-color: rgb(121, 121, 121);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+body {
   margin: 0 auto;
-  padding: 2rem;
+
+
+}
+
+h1 {
+  color: aliceblue;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 20px;
+  border: 1px solid transparent;
+  width: 15rem;
+  height: 3rem;
+  font-size: 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+}
+li{
+  list-style-image: none;
+}
+#root {
+  width: 1500px;
+
+  margin: 0 auto;
+  padding: 1rem;
   text-align: center;
 }
 
-.showroom__list {}
-
-.showroom__item li {
-  border: 1px solid gray;
-  margin: 20px;
+.showroom__list li {
+  background-color: rgba(199, 199, 199, 0.403);
+  margin: 30px;
+  width: 30%;
   padding: 20px;
-
+  border-radius: 20px;
 }
 
-.id {}
+.showroom__item {}
 
-.name {}
+.showroom__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 
-.price {}
+  flex-wrap: wrap;
+  padding: 20px;
+  list-style-image: none;
+
+  border-radius: 10px;
+}
+
+.showroom__item li:hover {
+  transition: all 0.2s;
+  box-shadow: 1px 1px 15px 2px rgb(169, 255, 181);
+  cursor: pointer;
+}
+
+.id {
+  font-size: 13px;
+}
+
+.name {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.price {
+  font-size: 1.1rem;
+}
 
 .nav {
   position: sticky;
+  top: 50%;
+}
+
+.showroom__nav {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgba(0, 255, 8, 0.198);
+  border-radius: 20px;
+  margin: 0 auto;
+  position: sticky;
   top: 0;
+  width: 70%;
+  color: wheat;
+}
+
+.showroom__nav:hover {
+  transition: all 0.2s;
+  background-color: rgba(0, 255, 8, 0.154);
+  box-shadow: 5px 5px 10px rgba(169, 255, 181, 0.109);
+}
+
+button:hover {
+  transition: all 0.2s;
+  box-shadow: 1px 1px 15px 2px rgb(169, 255, 181);
+}
+
+.load {
+  font-size: 3rem;
+  color: aliceblue;
+  animation: up-down;
 }

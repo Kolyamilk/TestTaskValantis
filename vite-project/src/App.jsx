@@ -3,8 +3,6 @@ import API from './API'
 import md5 from 'md5'
 import Header from './Header'
 import Sidebar from './Sidebar'
-
-
 import './App.css'
 
 function App() {
@@ -12,15 +10,11 @@ function App() {
   return (
 
     <>
-      
       <Sidebar />
       <Header />
       {/* <Sidebar /> */}
 
       <API />
-
-
-
     </>
   )
 }

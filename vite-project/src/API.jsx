@@ -1,9 +1,10 @@
 import md5 from 'md5'
 import { useState } from 'react'
+import SVGloading from './SVGloading/SvgLoading'
+
 
 export default function API() {
     const [name, setName] = useState(['Обновить товары'])
-    const [ids, setIds] = useState([])
     const [list, setList] = useState([])
     const [quantity, setQuantity] = useState(0)
 
@@ -16,6 +17,9 @@ export default function API() {
     if (day < 10) day = '0' + date.getDate()
     let xAuth = 'Valantis_' + year + mounth + day
     const URL = 'http://api.valantis.store:40000/'
+
+
+
     //Вывод всех ID 
     async function sendRequest(method, url, id) {
         return fetch(url, {
@@ -81,24 +85,30 @@ export default function API() {
             setQuantity(list.length)
         }
     }
+    function ret(name) {
+        if (name === 'Обновляем...') {
+            return <SVGloading />
+        }
+    }
     return (
         <>
-            
+   
             <section className="showroom">
-                <button className='showroom__btn' onClick={handleClick}>{name}</button>
-                <span> Показано: {quantity}</span>
+                <div className="showroom__nav">
+                    <button onClick={handleClick}>{name}</button>
+            
+                    <button> Показано: {quantity}</button>
+                </div>
                 <div className='showroom__list'>
                     <div className='showroom__item'>
-
-
                         <ul className='showroom__list'>
                             {
                                 list.map((...item) => (
                                     <li key={item[1]} className='showroom__item'>
-                                        <div className="id"> {item[0][0]}</div>
+                                        <div className="price"> {item[0][2]} руб.<hr /></div>
                                         <div className="name">
-                                            {item[0][1]}</div>
-                                        <div className="price">{item[0][2]}</div>
+                                            {item[0][1]}<hr /></div>
+                                        <div className="id"><span> ID</span>  {item[0][0]}</div>
                                     </li>
 
                                 ))
@@ -108,6 +118,7 @@ export default function API() {
                     </div>
                 </div>
             </section>
+            <span className='load'>{ret(name)}</span>
         </>
 
     )
