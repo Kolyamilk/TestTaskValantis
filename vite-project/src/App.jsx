@@ -15,10 +15,10 @@ function App() {
       <Header />
       {/* <Sidebar /> */}
 
-      <div className="main">
       <API />
-    
-      </div>
+     
+
+
     </>
   )
 }

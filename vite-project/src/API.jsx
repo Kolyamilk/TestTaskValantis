@@ -60,7 +60,6 @@ export default function API() {
 
 
         //получить id и отправить в showproduct
-
         async function getProduct(product) {
             await showProducts('POST', URL, product)
                 .then(response => show(response)
@@ -70,9 +69,7 @@ export default function API() {
                     let idProd = [result[i].id]
                     let product = [result[i].product]
                     let price = [result[i].price]
-
                     item = [...idProd, ...product, ...price]
-
                     productList.push([...item])
                     // item.map(() => {
                     //     console.log(item);
@@ -81,25 +78,17 @@ export default function API() {
                     setIds(productList)
                     setName('Обновить')
                 }
-
-
-
-
             }
-
-
         }
     }
-
     return (
         <>
-            <section>
-                <button onClick={handleClick}>{name}</button>
-                <ul>
-                    <li>{[...ids]}</li>
-                    <li>{[...ids]}</li>
-                </ul>
-
+            <section className="showroom">
+                <button className='showroom__btn' onClick={handleClick}>{name}</button>
+                <div className='showroom__list'>
+                    <div className='showroom__item'>
+                    </div>
+                </div>
             </section>
         </>
         // <button>asdasd</button>,
