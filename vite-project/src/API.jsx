@@ -4,8 +4,10 @@ import { useState } from 'react'
 export default function API() {
     const [name, setName] = useState(['Обновить товары'])
     const [ids, setIds] = useState([])
+    const [list, setList] = useState([])
+    const [quantity, setQuantity] = useState(0)
 
-    let productList = []
+
     let date = new Date()
     let year = date.getFullYear()
     let day = date.getDate()
@@ -25,7 +27,7 @@ export default function API() {
             //### Методы.
             body: JSON.stringify({
                 "action": "get_ids",
-                "params": { "limit": 1 }
+                "params": { "limit": 47 }
             })
         })
             .then(response => {
@@ -49,16 +51,15 @@ export default function API() {
                 return response.json()
             })
     }
+
+
+
     async function handleClick(item) {
         setName('Обновляем...')
 
         await sendRequest('POST', URL)
             .then(response => getProduct(response.result)
             )
-
-
-
-
         //получить id и отправить в showproduct
         async function getProduct(product) {
             await showProducts('POST', URL, product)
@@ -69,29 +70,45 @@ export default function API() {
                     let idProd = [result[i].id]
                     let product = [result[i].product]
                     let price = [result[i].price]
-                    item = [...idProd, ...product, ...price]
-                    productList.push([...item])
-                    // item.map(() => {
-                    //     console.log(item);
+                    item = [...idProd, ...product, ...price];
+                    list.push(item)
 
-                    // })
-                    setIds(productList)
+
                     setName('Обновить')
                 }
+                setList(list)
             }
+            setQuantity(list.length)
         }
     }
     return (
         <>
+            
             <section className="showroom">
                 <button className='showroom__btn' onClick={handleClick}>{name}</button>
+                <span> Показано: {quantity}</span>
                 <div className='showroom__list'>
                     <div className='showroom__item'>
+
+
+                        <ul className='showroom__list'>
+                            {
+                                list.map((...item) => (
+                                    <li key={item[1]} className='showroom__item'>
+                                        <div className="id"> {item[0][0]}</div>
+                                        <div className="name">
+                                            {item[0][1]}</div>
+                                        <div className="price">{item[0][2]}</div>
+                                    </li>
+
+                                ))
+                            }
+                        </ul>
+
                     </div>
                 </div>
             </section>
         </>
-        // <button>asdasd</button>,
-        // <button>asdasd</button>
+
     )
 }

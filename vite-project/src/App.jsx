@@ -12,11 +12,13 @@ function App() {
   return (
 
     <>
+      
+      <Sidebar />
       <Header />
       {/* <Sidebar /> */}
 
       <API />
-     
+
 
 
     </>
