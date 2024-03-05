@@ -1,13 +1,13 @@
 .load {
     position: sticky;
-    bottom: 40%;
+    bottom: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
 .ip {
-
-
-    width: 10em;
-    height: 5em;
+    width: 15rem;
+    height: 10rem;
 }
 
 .ip__track {

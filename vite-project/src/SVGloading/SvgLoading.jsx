@@ -1,6 +1,8 @@
 import './SvgLoading.css'
 
 export default function SVGloading() {
+
+ 
     return (
         <span className='load'>
             <svg className="ip" viewBox="0 0 256 128" width="400px" height="50px" xmlns="http://www.w3.org/2000/svg">

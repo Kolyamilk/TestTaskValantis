@@ -87,36 +87,38 @@ export default function API() {
     }
     function ret(name) {
         if (name === 'Обновляем...') {
+       
             return <SVGloading />
         }
     }
     return (
         <>
-   
+
             <section className="showroom">
                 <div className="showroom__nav">
                     <button onClick={handleClick}>{name}</button>
-            
+
                     <button> Показано: {quantity}</button>
                 </div>
+
                 <div className='showroom__list'>
                     <div className='showroom__item'>
                         <ul className='showroom__list'>
                             {
                                 list.map((...item) => (
                                     <li key={item[1]} className='showroom__item'>
+                                        <div className="number">{item[1]}</div>
                                         <div className="price"> {item[0][2]} руб.<hr /></div>
                                         <div className="name">
                                             {item[0][1]}<hr /></div>
                                         <div className="id"><span> ID</span>  {item[0][0]}</div>
                                     </li>
-
                                 ))
                             }
                         </ul>
-
                     </div>
                 </div>
+
             </section>
             <span className='load'>{ret(name)}</span>
         </>
