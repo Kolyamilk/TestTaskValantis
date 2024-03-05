@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(161, 161, 161, 0.87);
   background-color: #242424;
 
   font-synthesis: none;
@@ -29,7 +29,11 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
-
+.main{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -42,7 +46,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #ffb5b5;
   cursor: pointer;
   transition: border-color 0.25s;
 }
