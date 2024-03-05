@@ -13,9 +13,12 @@ function App() {
 
     <>
       <Header />
-      <Sidebar />
-      <h1>Товары</h1>
+      {/* <Sidebar /> */}
+
+      <div className="main">
       <API />
+    
+      </div>
     </>
   )
 }
