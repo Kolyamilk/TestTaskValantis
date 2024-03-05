@@ -24,8 +24,8 @@ export default function API() {
                 "action": "get_items",
                 "params": {
                     "ids": [
-                        "18e4e3bd-5e60-4348-8c92-4f61c676be1f",
-                        "1789ecf3-f81c-4f49-ada2-83804dcc74b0",
+                     
+                        "1789ecf3-f81c-4f49-ada2-83804dcc74b0"
 
                     ]
                 }
@@ -38,9 +38,8 @@ export default function API() {
     sendRequest('POST', URL)
         .then(response => getProduct(response.result[0])
         )
-    function getProduct(product) {
 
-
+    async function getProduct(product) {
         let nameProduct = ' Название: ' + product.product
         let brandProduct = ' Бренд: ' + product.brand
         let priceProduct = ' Цена: ' + product.price
@@ -51,7 +50,8 @@ export default function API() {
 
     }
     return (
-        <button>{name}</button>
+      <p>{name}</p>
+
         // <button>asdasd</button>,
         // <button>asdasd</button>
     )
