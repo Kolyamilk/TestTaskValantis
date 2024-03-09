@@ -8,8 +8,10 @@ export default function API() {
     const [name, setName] = useState(['Загрузить товары'])
     const [list, setList] = useState([])
     const [quantity, setQuantity] = useState(0)
-    const [currentPage, setCurrentPage] = useState(1)
-    const itemsPerPage = 4
+    const [thisPage, setThisPage] = useState(1)
+
+    let itemsPerPage = 50
+    let currentPage = 1
 
     let date = new Date()
     let year = date.getFullYear()
@@ -79,10 +81,6 @@ export default function API() {
 
 
                     function DataTable() {
-                        console.log(result);
-
-
-
 
 
                         for (let i = 0; i < result.length / itemsPerPage; i++) {
@@ -95,9 +93,9 @@ export default function API() {
                         const indexOfLastPage = currentPage * itemsPerPage;
                         console.log(indexOfLastPage);
                         const indexOfFirstPage = indexOfLastPage - itemsPerPage;
-                        console.log('индекс ферст пейдж' + indexOfFirstPage);
+                        console.log('индекс ферст пейдж ' + indexOfFirstPage);
                         const currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
-                   
+
 
 
                         document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
@@ -114,13 +112,19 @@ export default function API() {
                         setName('Обновить')
                     }
                     DataTable()
-                    const nextPage = () => {
-                       
-                        setCurrentPage(currentPage + 1)
+                    function nextPage() {
+
+                        currentPage++
+                        DataTable()
+                    }
+                    function prevPage() {
+
+                        currentPage--
                         DataTable()
                     }
 
-                    document.getElementById('nextBtn').addEventListener('click', nextPage)
+                    document.getElementById('nextBtn').addEventListener('click', nextPage, false)
+                    document.getElementById('prevBtn').addEventListener('click', prevPage, false)
                     // for (let i = 0; i < result.length; i++) {
 
                     //     let idProd = [result[i].id]
@@ -148,19 +152,25 @@ export default function API() {
         }
     }
 
+    function setNextPage() {
+        setThisPage(thisPage + 1)
+    }
+    function setPrevPage() {
+        setThisPage(thisPage - 1)
+    }
     return (
         <>
             <section className="showroom">
                 <div className="showroom__nav">
                     <button onClick={handleClick}>{name}</button>
                     <div className='paginationNav'>
-                        <button className='button'>Предыдущая</button>
+                        <button className='button' id='prevBtn' onClick={setPrevPage}>Предыдущая</button>
                         <div className="paginationNav__list">
-                            <span>{currentPage == 1 ? null : currentPage - 1}</span>
-                            <span className='currentPage'>{currentPage}</span>
-                            <span>{currentPage + 1}</span>
+                            <span>{thisPage == 1 ? null : thisPage - 1}</span>
+                            <span className='currentPage'>{thisPage}</span>
+                            <span>{thisPage + 1}</span>
                         </div>
-                        <button className='button' id='nextBtn'>Следующая</button>
+                        <button className='button' id='nextBtn' onClick={setNextPage}>Следующая</button>
                     </div >
                     <button> Показано: {quantity}</button>
                 </div>
