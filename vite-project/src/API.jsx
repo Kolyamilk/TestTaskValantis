@@ -9,8 +9,7 @@ export default function API() {
     const [list, setList] = useState([])
     const [quantity, setQuantity] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
-    let itemsPerPage = 100
-    let currentItems = currentPage
+    const itemsPerPage = 4
 
     let date = new Date()
     let year = date.getFullYear()
@@ -57,6 +56,7 @@ export default function API() {
             })
     }
     //3() Вывод товаров 
+
     async function handleClick(item) {
 
         if (quantity < 50) {
@@ -80,7 +80,12 @@ export default function API() {
 
                     function DataTable() {
                         console.log(result);
-                        for (let i = 0; i < result.length; i++) {
+
+
+
+
+
+                        for (let i = 0; i < result.length / itemsPerPage; i++) {
                             let idProd = [result[i].id]
                             let product = [result[i].product]
                             let price = [result[i].price]
@@ -88,16 +93,16 @@ export default function API() {
                             list.push(item)
                         }
                         const indexOfLastPage = currentPage * itemsPerPage;
+                        console.log(indexOfLastPage);
                         const indexOfFirstPage = indexOfLastPage - itemsPerPage;
+                        console.log('индекс ферст пейдж' + indexOfFirstPage);
                         const currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
+                   
 
 
-
-                        console.log(currentItems);
                         document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
                             `
                             <li key=${item[1]} className='showroom__item'>
-        
                                     <div className="price"> ${item.price} руб.<hr /></div>
                                     <div className="name">${item.product}<hr /></div>
                                     <div className="id"><span> ID</span>${item.id}</div>
@@ -105,9 +110,17 @@ export default function API() {
                             `
                         )
 
+                        setList(list)
+                        setName('Обновить')
                     }
                     DataTable()
+                    const nextPage = () => {
+                       
+                        setCurrentPage(currentPage + 1)
+                        DataTable()
+                    }
 
+                    document.getElementById('nextBtn').addEventListener('click', nextPage)
                     // for (let i = 0; i < result.length; i++) {
 
                     //     let idProd = [result[i].id]
@@ -117,61 +130,38 @@ export default function API() {
 
                     //     // list.push(item)
                     // }
-                    setList(list)
-                    setName('Обновить')
+
                 }
-                setQuantity(list.length)
+                setQuantity(itemsPerPage)
             }
         } else {
             setName('Максимум 50 товаров')
             return
         }
+
     }
-    async function nextPage(item) {
-        setName('Обновляем...')
-        await sendRequest('POST', URL)
-            .then(response => getProduct(response.result)
-            )
-        //получить id и отправить в showproduct
-        async function getProduct(product) {
-            await showProducts('POST', URL, product)
-                .then(response => show(response)
-                )
-            function show({ result }) {
-                for (let i = 0; i < result.length; i++) {
-                    let idProd = [result[i].id]
-                    let product = [result[i].product]
-                    let price = [result[i].price]
-                    item = [...idProd, ...product, ...price];
-                    list.push(item)
-                }
-                setList(list)
-                setName('Обновить')
-                setCurrentPage(currentPage + 1)
-            }
-            setQuantity(list.length)
-        }
-    }
+
     //Добавляет картинку загрузки
     function ret(name) {
         if (name === 'Обновляем...') {
             return <SVGloading />
         }
     }
+
     return (
         <>
             <section className="showroom">
                 <div className="showroom__nav">
                     <button onClick={handleClick}>{name}</button>
-                    {/* <div className='paginationNav'>
+                    <div className='paginationNav'>
                         <button className='button'>Предыдущая</button>
                         <div className="paginationNav__list">
-                            <span>{currentPage == 0 ? null : currentPage - 1}</span>
+                            <span>{currentPage == 1 ? null : currentPage - 1}</span>
                             <span className='currentPage'>{currentPage}</span>
                             <span>{currentPage + 1}</span>
                         </div>
-                        <button className='button' onClick={nextPage} >Следующая</button>
-                    </div > */}
+                        <button className='button' id='nextBtn'>Следующая</button>
+                    </div >
                     <button> Показано: {quantity}</button>
                 </div>
                 <div className='showroom__list'>
