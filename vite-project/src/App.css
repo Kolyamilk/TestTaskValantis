@@ -13,11 +13,8 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-
 body {
   margin: 0 auto;
-
-
 }
 
 h1 {
@@ -43,7 +40,6 @@ li {
   list-style: none;
 }
 
-
 #root {
   max-width: 2000px;
 
@@ -55,11 +51,10 @@ li {
 .showroom__list li {
   background-color: rgba(199, 199, 199, 0.403);
   margin: 30px;
-  width: 30%;
+  width: 18%;
   padding: 20px;
   border-radius: 20px;
 }
-
 
 .showroom__list {
   display: flex;
@@ -76,8 +71,6 @@ li {
   box-shadow: 1px 1px 15px 2px rgb(169, 255, 181);
   cursor: pointer;
 }
-
-
 
 .number {
   position: absolute;
@@ -106,24 +99,19 @@ li {
   position: sticky;
   top: 50%;
 }
+
 .showroom__nav {
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(0, 255, 34, 0.18);
+  background-color: rgba(68, 170, 82, 0.784);
   border-radius: 20px;
   margin: 0 auto;
   position: sticky;
   top: 0;
   width: 70%;
   color: wheat;
-}
-
-.showroom__nav:hover {
-  transition: all 0.2s;
-  background-color: rgba(0, 255, 8, 0.364);
-  box-shadow: 5px 5px 10px rgba(169, 255, 181, 0.109);
 }
 
 button:hover {
@@ -135,4 +123,46 @@ button:hover {
   font-size: 3rem;
   color: aliceblue;
   animation: up-down;
+}
+
+.paginationNav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.paginationNav__list {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  width: 50%;
+  font-size: 1.1rem;
+  background-color: rgb(255, 255, 255);
+
+  color: rgb(0, 0, 0);
+}
+
+span {
+  margin-left: 10px;
+  margin-right: 10px;
+  color: rgb(0, 0, 0);
+
+}
+
+.currentPage {
+  font-size: 1.2rem;
+  color: rgb(0, 0, 0);
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.17);
+  border-radius: 5px;
+  padding: 12px;
+
 }
