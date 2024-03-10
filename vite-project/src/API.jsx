@@ -134,8 +134,6 @@ export default function API() {
                     //Вывод в меню фильтр  всех Брендов
                     const brends = filteredBrend.map((item, key) => {
                         return (
-
-
                             <li key={key}>
                                 <input type="checkbox" name={item} id={item} />
                                 <label htmlFor={item}>{item}</label>
