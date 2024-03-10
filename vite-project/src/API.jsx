@@ -4,8 +4,6 @@ import { useClickOutside } from './useClickOutside'
 import SVGloading from './SVGloading/SvgLoading'
 import Nav from './Nav'
 
-
-
 export default function API() {
     const [name, setName] = useState(['Загрузить товары'])
     const [list, setList] = useState([])
