@@ -12,11 +12,8 @@ export default function API() {
     const [quantity, setQuantity] = useState(0)
     const [thisPage, setThisPage] = useState(1)
     const [open, setOpen] = useState(false)
-
     const [selectedFilters, setSelectedFilters] = useState([])
     const [filteredItems, setFilteredItems] = useState([])
-
-
     const menuRef = useRef(null)
     useClickOutside(menuRef, () => {
         if (open) setTimeout(() => setOpen(false), 50)
