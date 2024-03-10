@@ -252,16 +252,11 @@ span {
 
 }
 
-.active {
-  background-color: rgb(255, 0, 0);
-  color: rgb(0, 0, 0);
-}
 
 
 
 
-
-/* input[type="checkbox"]:checked,
+input[type="checkbox"]:checked,
 input[type="checkbox"]:not(:checked) {
   position: absolute;
   left: -9999px;
@@ -303,4 +298,4 @@ input[type="checkbox"]:not(:checked)+label:after {
 
 input[type="checkbox"]:checked+label:after {
   opacity: 1;
-} */
+}

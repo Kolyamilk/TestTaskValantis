@@ -88,7 +88,6 @@ export default function API() {
                     )
 
                 async function show({ result }) {
-
                     //Лимитный показ товаров на одной странице
                     function DataTable() {
                         for (let i = 0; i < result.length / itemsPerPage; i++) {
@@ -104,38 +103,29 @@ export default function API() {
                         }
                         const indexOfLastPage = currentPage * itemsPerPage;
                         const indexOfFirstPage = indexOfLastPage - itemsPerPage;
-                        const currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
+                        let currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
 
-
-
-
-
-
-
-
+                        let newCurrentItems = currentItems.slice()
+                        console.log('currentItems: ' + newCurrentItems);
                         document.getElementById('h1').innerHTML = `
                        <h1> Товаров:  <span>(${indexOfFirstPage} - ${indexOfLastPage})</span></h1>
                         `
                         //Вывод карточек товара на страницу
-                        // document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
-                        //     `
-                        //     <li className='showroom__item'>         
-                        //             <div className="price"><strong> Цена: </strong> ${item.price} руб.<hr /></div>
-                        //             <div className="name" ><strong> Имя: </strong>${item.product}<hr /></div>
-                        //             <div className="brend"><strong> Бренд: </strong>${item.brand}<hr /></div>
-                        //             <div className="id"><strong> ID: </strong>${item.id}</div>
-                        //     </li>
-                        //     `
-                        // )
-                        setFilteredItems(list)
-                        console.log(filteredItems);
-
+                        document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
+                            `
+                            <li className='showroom__item'>         
+                                    <div className="price"><strong> Цена: </strong> ${item.price} руб.<hr /></div>
+                                    <div className="name" ><strong> Имя: </strong>${item.product}<hr /></div>
+                                    <div className="brend"><strong> Бренд: </strong>${item.brand}<hr /></div>
+                                    <div className="id"><strong> ID: </strong>${item.id}</div>
+                            </li>
+                            `
+                        )
+                        setFilteredItems(filteredItems)
                         setList(list)
-
                         setName('Загружено ')
                     }
                     DataTable()
-
                     //Создаём новый массив и удаляем null значения в нём
                     var filteredBrend = filterBrendProduct.filter(function (el) {
                         return el != null;
@@ -144,19 +134,12 @@ export default function API() {
                     //Вывод в меню фильтр  всех Брендов
                     const brends = filteredBrend.map((item, key) => {
                         return (
-                            <button
-                                onClick={() => handleFilterButtonClick(item)}
-                                className={`button ${selectedFilters?.includes(item) ? "active" : ""}
-                                    }`}
-                                key={`filters${key}`}
-                            >
-                                {item}
-                            </button>
 
-                            // <li key={key}>
-                            //     <input type="checkbox" name={item} id={item} />
-                            //     <label htmlFor={item}>{item}</label>
-                            // </li>
+
+                            <li key={key}>
+                                <input type="checkbox" name={item} id={item} />
+                                <label htmlFor={item}>{item}</label>
+                            </li>
                         );
                     });
                     setFilterBrendProduct(brends)
