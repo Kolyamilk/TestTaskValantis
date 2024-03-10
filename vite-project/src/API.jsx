@@ -1,5 +1,6 @@
 import md5 from 'md5'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
+import { useClickOutside } from './useClickOutside'
 import SVGloading from './SVGloading/SvgLoading'
 import Nav from './Nav'
 
@@ -8,10 +9,20 @@ import Nav from './Nav'
 export default function API() {
     const [name, setName] = useState(['Загрузить товары'])
     const [list, setList] = useState([])
+    const [nameProduct, setNameProduct] = useState([])
+    const [filterBrendProduct, setFilterBrendProduct] = useState([])
     const [quantity, setQuantity] = useState(0)
     const [thisPage, setThisPage] = useState(1)
-    const { errorSVG, setErrorSVG } = useState('Идёт загрузка')
+    const [open, setOpen] = useState(false)
 
+    const [selectedFilters, setSelectedFilters] = useState([])
+    const [filteredItems, setFilteredItems] = useState([])
+
+
+    const menuRef = useRef(null)
+    useClickOutside(menuRef, () => {
+        if (open) setTimeout(() => setOpen(false), 50)
+    })
 
     let itemsPerPage = 50
     let currentPage = 1
@@ -65,7 +76,7 @@ export default function API() {
     async function handleClick(item) {
 
         if (quantity < 50) {
-            setName('Обновляем...')
+            setName('Загрузка...')
             await sendRequest('POST', URL)
                 .then(response => getProduct(response.result)
                 )
@@ -76,57 +87,87 @@ export default function API() {
                     .then(response => show(response)
                     )
 
-
-                // Пагинация
-
-
                 async function show({ result }) {
 
-
+                    //Лимитный показ товаров на одной странице
                     function DataTable() {
-
-
                         for (let i = 0; i < result.length / itemsPerPage; i++) {
+                            let idBrend = [result[i].brand]
                             let idProd = [result[i].id]
                             let product = [result[i].product]
                             let price = [result[i].price]
-                            item = [...idProd, ...product, ...price];
+                            item = [...idProd, ...product, ...price, ...idBrend];
                             list.push(item)
+                            filteredItems.push(item)
+                            nameProduct.push(item[1])
+                            filterBrendProduct.push(item[3])
                         }
                         const indexOfLastPage = currentPage * itemsPerPage;
                         const indexOfFirstPage = indexOfLastPage - itemsPerPage;
                         const currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
 
+
+
+
+
+
+
+
                         document.getElementById('h1').innerHTML = `
                        <h1> Товаров:  <span>(${indexOfFirstPage} - ${indexOfLastPage})</span></h1>
                         `
-
-                        document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
-                            `
-                            <li className='showroom__item'>         
-                                    <div className="price"><strong> Цена: </strong> ${item.price} руб.<hr /></div>
-                                    <div className="name" ><strong> Имя: </strong>${item.product}<hr /></div>
-                                    <div className="brend"><strong> Бренд: </strong>${item.brand}<hr /></div>
-                                    <div className="id"><strong> ID: </strong>${item.id}</div>
-                            </li>
-                            `
-                        )
+                        //Вывод карточек товара на страницу
+                        // document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
+                        //     `
+                        //     <li className='showroom__item'>         
+                        //             <div className="price"><strong> Цена: </strong> ${item.price} руб.<hr /></div>
+                        //             <div className="name" ><strong> Имя: </strong>${item.product}<hr /></div>
+                        //             <div className="brend"><strong> Бренд: </strong>${item.brand}<hr /></div>
+                        //             <div className="id"><strong> ID: </strong>${item.id}</div>
+                        //     </li>
+                        //     `
+                        // )
+                        setFilteredItems(list)
+                        console.log(filteredItems);
 
                         setList(list)
-                        setName('Обновить')
+
+                        setName('Загружено ')
                     }
                     DataTable()
-                    function nextPage() {
 
+                    //Создаём новый массив и удаляем null значения в нём
+                    var filteredBrend = filterBrendProduct.filter(function (el) {
+                        return el != null;
+                    })
+
+                    //Вывод в меню фильтр  всех Брендов
+                    const brends = filteredBrend.map((item, key) => {
+                        return (
+                            <button
+                                onClick={() => handleFilterButtonClick(item)}
+                                className={`button ${selectedFilters?.includes(item) ? "active" : ""}
+                                    }`}
+                                key={`filters${key}`}
+                            >
+                                {item}
+                            </button>
+
+                            // <li key={key}>
+                            //     <input type="checkbox" name={item} id={item} />
+                            //     <label htmlFor={item}>{item}</label>
+                            // </li>
+                        );
+                    });
+                    setFilterBrendProduct(brends)
+                    function nextPage() {
                         currentPage++
                         DataTable()
                     }
                     function prevPage() {
-
                         currentPage--
                         DataTable()
                     }
-
                     document.getElementById('nextBtn').addEventListener('click', nextPage, false)
                     document.getElementById('prevBtn').addEventListener('click', prevPage, false)
                     // for (let i = 0; i < result.length; i++) {
@@ -143,14 +184,14 @@ export default function API() {
                 setQuantity(itemsPerPage)
             }
         } else {
-            setName('Максимум 50 товаров')
+
             return
         }
 
     }
     //Добавляет картинку загрузки
     function ret(name) {
-        if (name === 'Обновляем...') {
+        if (name === 'Загрузка...') {
             return <SVGloading />
         }
     }
@@ -158,7 +199,11 @@ export default function API() {
         setThisPage(thisPage + 1)
     }
     function setPrevPage() {
-        setThisPage(thisPage - 1)
+        if (thisPage === 1) {
+            return
+        } else {
+            setThisPage(thisPage - 1)
+        }
     }
     return (
         <>
@@ -167,20 +212,25 @@ export default function API() {
 
                 <div className="showroom__nav">
                     <button onClick={handleClick}>{name}</button>
+
                     <div className='paginationNav'>
-                        <button className='button' id='prevBtn' onClick={setPrevPage}>Предыдущая</button>
+                        <button className='button' id='prevBtn' onClick={setPrevPage}>&#8592;</button>
                         <div className="paginationNav__list">
                             <span>{thisPage == 1 ? null : thisPage - 1}</span>
                             <span className='currentPage'>{thisPage}</span>
                             <span>{thisPage + 1}</span>
                         </div>
-                        <button className='button' id='nextBtn' onClick={setNextPage}>Следующая</button>
+                        <button className='button' id='nextBtn' onClick={setNextPage}>&#8594;</button>
                     </div >
-                    <button className='menu__button'> Фильтр</button>
-                    <nav className='menu'>
+                    <button className='menu__button' onClick={() => setOpen(!open)}> Фильтр</button>
+                    <nav className={`menu ${open ? 'active' : ""} `} ref={menuRef}>
                         <button className='btn'>Бренд</button>
-                        <button className='btn'>Цена</button>
-                        <button className='btn'>Имя</button>
+                        <ul className='menu__filter'>
+                            {filterBrendProduct}
+                        </ul>
+                        {/* <button className='btn'>Цена</button>
+                        <button className='btn'>Имя</button> */}
+
                     </nav>
 
                 </div>
@@ -194,7 +244,7 @@ export default function API() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             <span className='load'>{ret(name)}</span>
 
