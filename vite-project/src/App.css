@@ -5,7 +5,8 @@
 
   color-scheme: light dark;
 
-  background-color: rgb(121, 121, 121);
+  background: rgb(238, 174, 202);
+  background: radial-gradient(circle, rgba(174, 238, 178, 0.397) 0%, rgba(148, 187, 233, 0.35525230600052526) 100%);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -27,7 +28,7 @@ button {
   background-color: aliceblue;
   border-radius: 20px;
   border: 1px solid transparent;
-  width: 15rem;
+  width: 12rem;
   height: 3rem;
   font-size: 1.2em;
   font-weight: 500;
@@ -66,9 +67,13 @@ li {
   border-radius: 10px;
 }
 
+.showroom__item {
+  text-align: start;
+}
+
 .showroom__item li:hover {
   transition: all 0.2s;
-  box-shadow: 1px 1px 15px 2px rgb(169, 255, 181);
+  box-shadow: 1px 1px 15px 2px rgb(246, 84, 255);
   cursor: pointer;
 }
 
@@ -84,15 +89,20 @@ li {
 
 .id {
   font-size: 1.1rem;
+  text-align: left;
 }
 
 .name {
   font-size: 1.1rem;
   font-weight: 500;
+
+
 }
 
 .price {
   font-size: 1.1rem;
+  text-align: left;
+
 }
 
 .nav {
@@ -100,12 +110,14 @@ li {
   top: 50%;
 }
 
+
 .showroom__nav {
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: rgba(68, 170, 82, 0.784);
+  background: rgb(42, 255, 0);
+  background: linear-gradient(90deg, rgba(42, 255, 0, 0.6241598690257353) 26%, rgba(215, 0, 255, 0.5261206533394608) 100%);
   border-radius: 20px;
   margin: 0 auto;
   position: sticky;
@@ -143,7 +155,7 @@ button:hover {
 }
 
 .button {
-  width: 50%;
+  width: 30%;
   font-size: 1.1rem;
   background-color: rgb(255, 255, 255);
 
@@ -165,4 +177,49 @@ span {
   border-radius: 5px;
   padding: 12px;
 
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+  left: -40%;
+
+
+}
+
+.menu {
+  padding: 20px;
+  background-color: aliceblue;
+  position: absolute;
+  width: 13.8rem;
+  border-radius: 20px;
+  top: calc(100% + 5px);
+
+  right: 0;
+}
+
+.menu::before,
+.menu::after {
+  display: block;
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  right: 15px;
+  border: 10px solid transparent;
+}
+
+.btn {
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  transition: all 0.2s;
+  background-color: rgba(255, 12, 231, 0.264);
+  box-shadow: 1px 1px 15px 2px rgb(255, 12, 231);
 }

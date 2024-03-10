@@ -1,6 +1,7 @@
 import md5 from 'md5'
 import { useState } from 'react'
 import SVGloading from './SVGloading/SvgLoading'
+import Nav from './Nav'
 
 
 
@@ -9,6 +10,8 @@ export default function API() {
     const [list, setList] = useState([])
     const [quantity, setQuantity] = useState(0)
     const [thisPage, setThisPage] = useState(1)
+    const { errorSVG, setErrorSVG } = useState('Идёт загрузка')
+
 
     let itemsPerPage = 50
     let currentPage = 1
@@ -91,19 +94,20 @@ export default function API() {
                             list.push(item)
                         }
                         const indexOfLastPage = currentPage * itemsPerPage;
-                        console.log(indexOfLastPage);
                         const indexOfFirstPage = indexOfLastPage - itemsPerPage;
-                        console.log('индекс ферст пейдж ' + indexOfFirstPage);
                         const currentItems = result.slice(indexOfFirstPage, indexOfLastPage)
 
-
+                        document.getElementById('h1').innerHTML = `
+                       <h1> Товаров:  <span>(${indexOfFirstPage} - ${indexOfLastPage})</span></h1>
+                        `
 
                         document.getElementById('showroom__list').innerHTML = currentItems.map(item =>
                             `
-                            <li key=${item[1]} className='showroom__item'>
-                                    <div className="price"> ${item.price} руб.<hr /></div>
-                                    <div className="name">${item.product}<hr /></div>
-                                    <div className="id"><span> ID</span>${item.id}</div>
+                            <li className='showroom__item'>         
+                                    <div className="price"><strong> Цена: </strong> ${item.price} руб.<hr /></div>
+                                    <div className="name" ><strong> Имя: </strong>${item.product}<hr /></div>
+                                    <div className="brend"><strong> Бренд: </strong>${item.brand}<hr /></div>
+                                    <div className="id"><strong> ID: </strong>${item.id}</div>
                             </li>
                             `
                         )
@@ -144,14 +148,12 @@ export default function API() {
         }
 
     }
-
     //Добавляет картинку загрузки
     function ret(name) {
         if (name === 'Обновляем...') {
             return <SVGloading />
         }
     }
-
     function setNextPage() {
         setThisPage(thisPage + 1)
     }
@@ -160,7 +162,9 @@ export default function API() {
     }
     return (
         <>
+
             <section className="showroom">
+
                 <div className="showroom__nav">
                     <button onClick={handleClick}>{name}</button>
                     <div className='paginationNav'>
@@ -172,33 +176,31 @@ export default function API() {
                         </div>
                         <button className='button' id='nextBtn' onClick={setNextPage}>Следующая</button>
                     </div >
-                    <button> Показано: {quantity}</button>
+                    <button className='menu__button'> Фильтр</button>
+                    <nav className='menu'>
+                        <button className='btn'>Бренд</button>
+                        <button className='btn'>Цена</button>
+                        <button className='btn'>Имя</button>
+                    </nav>
+
                 </div>
                 <div className='showroom__list'>
                     <div className='showroom__item'>
 
-                        <ul className='showroom__list' id='showroom__list'>
+                        <div className="">
+                            <ul className='showroom__list' id='showroom__list'>
 
-                            {
-
-
-
-
-                                // list.map((...item) => (
-                                //     <li key={item[1]} className='showroom__item'>
-                                //         <div className="number">{item[1]}</div>
-                                //         <div className="price"> {item[0][2]} руб.<hr /></div>
-                                //         <div className="name">
-                                //             {item[0][1]}<hr /></div>
-                                //         <div className="id"><span> ID</span>  {item[0][0]}</div>
-                                //     </li>
-                                // ))
-                            }
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </section>
+
             <span className='load'>{ret(name)}</span>
+
+
+
+
         </>
     )
 }
