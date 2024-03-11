@@ -7,7 +7,6 @@ export default function SVGloading() {
         setTimeout(() => {
             setError('Ошибка в загрузке обновите страницу (F5) и попробуйте снова'); return
         }, 14000)
-        
     }
     return (
         <>
