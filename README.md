@@ -3,5 +3,4 @@
 - в терминале прописать  `npm run dev` 
 - done
 
-![Иллюстрация к проекту](https://github.com/Kolyamilk/TestTaskValantis.github.io/blob/main/11.png)
-![Иллюстрация к проекту](https://github.com/Kolyamilk/TestTaskValantis.github.io/blob/main/22.png)
+![Видео Проекта](https://github.com/Kolyamilk/TestTaskValantis.github.io/blob/main/video.gif)
